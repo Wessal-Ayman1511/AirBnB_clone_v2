@@ -17,25 +17,29 @@ class FileStorage:
     __file_path = 'file.json'
     __objects = {}
     
-    # def delete(self, obj=None):
-    #     """ deletes object from file storage"""
-    #     if obj is None:
-    #         return
-    #     obj_to_delete = f"{obj.__class__name__}.{obj.id}"
-    #     try:
-    #         del FileStorage.__objects[obj_to_delete]
-    #     except ArithmeticError:
-    #         pass
-    #     except KeyboardInterrupt:
-    #         pass
+    def delete(self, obj=None):
+        """ deletes object from file storage"""
+        if obj is None:
+            return
+        obj_to_del = f"{obj.__class__.__name__}.{obj.id}"
+
+        try:
+            del FileStorage.__objects[obj_to_del]
+        except AttributeError:
+            pass
+        except KeyboardInterrupt:
+            pass
             
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         if cls:
-            if (cls, str):
+            if isinstance(cls, str):
                 cls = globals().get(cls)
             if cls and issubclass(cls, BaseModel):
-                return {key: obj for key, obj in FileStorage.__objects.items() if isinstance(obj, cls)}
+                cls_dict = {k: v for k,
+                            v in self.__objects.items() if isinstance(v, cls)}
+                return cls_dict
+        return FileStorage.__objects
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
