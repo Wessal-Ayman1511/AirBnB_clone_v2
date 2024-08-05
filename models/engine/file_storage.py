@@ -31,12 +31,11 @@ class FileStorage:
             
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        # if cls:
-        #     if (cls, str):
-        #         cls = globals().get(cls)
-        #     if cls and issubclass(cls, BaseModel):
-        #         return {key: obj for key, obj in FileStorage.__objects.items() if isinstance(obj, cls)}
-        return FileStorage.__objects
+        if cls:
+            if (cls, str):
+                cls = globals().get(cls)
+            if cls and issubclass(cls, BaseModel):
+                return {key: obj for key, obj in FileStorage.__objects.items() if isinstance(obj, cls)}
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
