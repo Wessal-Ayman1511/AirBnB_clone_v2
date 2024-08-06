@@ -9,23 +9,26 @@ execute: fab -f 3-deploy_web_static.py deploy -i ~/.ssh/id_rsa -u ubuntu
 from fabric.api import env, local, put, run
 from datetime import datetime
 from os.path import exists, isdir
-env.hosts = ['54.236.56.171', '	52.90.14.249']
+env.hosts = ['54.236.56.171', '52.90.14.249']
 
 
 def do_pack():
-    """generates a tgz archive"""
-    try:
-        date = datetime.now().strftime("%Y%m%d%H%M%S")
-        if isdir("versions") is False:
-            local("mkdir versions")
-        file_name = "versions/web_static_{}.tgz".format(date)
-        local("tar -cvzf {} web_static".format(file_name))
-        return file_name
-    except:
+    """
+    making an archive on web_static folder
+    """
+
+    time = datetime.now()
+    archive = 'web_static_' + time.strftime("%Y%m%d%H%M%S") + '.' + 'tgz'
+    local('mkdir -p versions')
+    create = local('tar -cvzf versions/{} web_static'.format(archive))
+    if create is not None:
+        return archive
+    else:
         return None
 
 
 def do_deploy(archive_path):
+    # versions/web_static_20170315003959.tgz
     """distributes an archive to the web servers"""
     if exists(archive_path) is False:
         return False
@@ -44,6 +47,7 @@ def do_deploy(archive_path):
         return True
     except:
         return False
+
 
 
 def deploy():
