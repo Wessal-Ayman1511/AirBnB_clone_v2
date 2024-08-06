@@ -40,7 +40,5 @@ def do_deploy(archive_path):
         run('ln -s {}{}/ /data/web_static/current'.format(path, no_ext))
         # Create New Symbolic Link
         return True
-    except (IOError, OSError) as e:
-        # Handle specific exceptions here
-        print(f'An error occurred: {e}')
+    except:
         return False
