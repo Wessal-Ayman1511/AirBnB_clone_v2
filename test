@@ -1,0 +1,9 @@
+import os
+
+# Retrieve the value of the environment variable 'HOME'
+home_directory = os.getenv('HOME')
+print(f"Home Directory: {home_directory}")
+
+# Retrieve the value of an environment variable with a default value
+database_url = os.getenv('DATABASE_URL', 'sqlite:///default.db')
+print(f"Database URL: {database_url}")
