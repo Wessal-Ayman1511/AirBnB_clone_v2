@@ -27,6 +27,7 @@ def c_text(text):
 def python_text(text):
     return f"Python {text.replace('_', ' ')}"
 
+
 @app.route('/number/<int:n>', strict_slashes=False)
 def is_number(n):
     return f"{n} is a number"
