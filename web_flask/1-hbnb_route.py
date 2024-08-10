@@ -10,6 +10,7 @@ app = Flask(__name__)
 def home():
     return "Hello HBNB!"
 
+
 @app.route('/hbnb', strict_slashes=False)
 def hbnb():
     return "HBNB"
