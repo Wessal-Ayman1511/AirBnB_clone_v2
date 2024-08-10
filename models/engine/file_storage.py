@@ -71,3 +71,8 @@ class FileStorage:
             pass
         except json.decoder.JSONDecodeError:
             pass
+
+        def close(self):
+            '''
+            '''
+            self.reload()
